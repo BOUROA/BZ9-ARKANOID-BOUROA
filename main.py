@@ -4,4 +4,5 @@ from arkanoid.game import Arkanoid
 if __name__ == '__main__':
     print("main: main.py")
     print(f'Estoy jugando a {ANCHO}x{ALTO}')
-    mi_juego = Arkanoid()
+    juego = Arkanoid()
+    juego.jugar()
