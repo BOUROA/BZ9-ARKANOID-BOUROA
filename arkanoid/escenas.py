@@ -2,7 +2,7 @@ import os
 import pygame as pg
 
 from . import ANCHO, ALTO, FPS
-from .entidades import Raqueta
+from .entidades import Raqueta, Ladrillo
 
 
 class Escena:
@@ -58,8 +58,26 @@ class Partida(Escena):
             os.path.join('resources', 'images', 'background.jpg'))
 
         self.jugador = Raqueta()
+        self.ladrillos = pg.sprite.Group()
+
+    def reset(self):
+         num_columnas = 4
+         num_filas = 5
+         ancho_ladrillo = 90
+         alto_ladrillo = 30
+         self.ladrillos.empty()
+
+        for fila in range(num_filas):
+            for col in range(num_columnas):
+                ladrillo = Ladrillo(col*ancho_ladrillo, fila*alto_ladrillo)
+                 self.ladrillos.add(ladrillo)
+
+
+    
+
 
     def bucle_principal(self):
+        self.reset()
         while True:
 
             self.reloj.tick(FPS)
@@ -69,6 +87,7 @@ class Partida(Escena):
                     pg.quit()
 
             self.jugador.update()
+            self.ladrillos.update()
 
             self.pantalla.blit(self.fondo, (0, 0))
             self.pantalla.blit(self.jugador.image, self.jugador.rect)

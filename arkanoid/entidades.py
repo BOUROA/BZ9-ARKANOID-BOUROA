@@ -12,7 +12,6 @@ class Raqueta(Sprite):
     iteracion = 0
     fps_animacion = 12
     limite_iteracion = FPS/fps_animacion
-    
 
     def __init__(self):
         super().__init__()
@@ -46,3 +45,11 @@ class Raqueta(Sprite):
                 self.que_imagen_cargar = 0
             self.image = self.imagenes[self.que_imagen_cargar]
             self.iteracion = 0
+
+
+class Ladrillo(Sprite):
+
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pg.image.load(os.path.join('resource', 'images', 'greentTile.png')
+        self.rect=self.image.get_rect(x=x, y=y)
