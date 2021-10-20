@@ -1,13 +1,14 @@
 import os
 import pygame as pg
 
-from . import ANCHO, ALTO
+from . import ANCHO, ALTO, FPS
 from .entidades import Raqueta
 
 
 class Escena:
     def __init__(self, pantalla):
         self.pantalla = pantalla
+        self.reloj = pg.time.Clock()
 
     def bucle_principal(self):
         pass
@@ -60,6 +61,9 @@ class Partida(Escena):
 
     def bucle_principal(self):
         while True:
+
+            self.reloj.tick(FPS)
+
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
