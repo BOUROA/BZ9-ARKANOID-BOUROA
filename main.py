@@ -1,4 +1,4 @@
-#Version Arkanoid Raul
+# Version Arkanoid Raul
 
 from arkanoid import ANCHO, ALTO
 from arkanoid.game import Juego
