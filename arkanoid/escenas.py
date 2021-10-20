@@ -1,7 +1,8 @@
 import os
 import pygame as pg
-from pygame import display
-from arkanoid import ANCHO
+
+from . import ANCHO, ALTO
+from .entidades import Raqueta
 
 
 class Escena:
@@ -15,6 +16,7 @@ class Escena:
 class Portada(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
+
         self.pantalla.fill((99, 99, 150))
 
         self.logo = pg.image.load(
@@ -54,14 +56,19 @@ class Partida(Escena):
         self.fondo = pg.image.load(
             os.path.join('resources', 'images', 'background.jpg'))
 
+        self.jugador = Raqueta()
+
     def bucle_principal(self):
         while True:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
-                    return
-            self.pantalla.fill((150, 99, 99))
+                    pg.quit()
+
+            self.jugador.update()
 
             self.pantalla.blit(self.fondo, (0, 0))
+            self.pantalla.blit(self.jugador.image, self.jugador.rect)
+
             pg.display.flip()
 
 
@@ -70,6 +77,7 @@ class HallOfFame(Escena):
         while True:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
-                    return
+                    pg.quit()
+
             self.pantalla.fill((99, 150, 99))
             pg.display.flip()
