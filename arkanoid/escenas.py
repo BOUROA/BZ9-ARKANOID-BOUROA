@@ -22,6 +22,9 @@ class Portada(Escena):
         while True:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
+                    pg.quit()
+                    # exit() (hace lo mismo)
+                if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
                     return
             self.pantalla.fill((99, 99, 150))
             # ANCHO/2 - self.logo.get_width()/2 == (ANCHO-self.logo.get_width())/2
