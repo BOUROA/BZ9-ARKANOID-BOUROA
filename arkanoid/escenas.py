@@ -61,17 +61,18 @@ class Partida(Escena):
         self.ladrillos = pg.sprite.Group()
 
     def reset(self):
-         num_columnas = 4
-         num_filas = 5
+         num_columnas = 7
+         num_filas = 20
          ancho_ladrillo = 90
          alto_ladrillo = 30
          self.ladrillos.empty()
-
-        for fila in range(num_filas):
-            for col in range(num_columnas):
+         for fila in range(num_filas):
+             for col in range(num_columnas):
                 ladrillo = Ladrillo(col*ancho_ladrillo, fila*alto_ladrillo)
-                 self.ladrillos.add(ladrillo)
-
+                self.ladrillos.add(ladrillo)
+       
+                
+        
 
     
 
@@ -91,6 +92,7 @@ class Partida(Escena):
 
             self.pantalla.blit(self.fondo, (0, 0))
             self.pantalla.blit(self.jugador.image, self.jugador.rect)
+            self.ladrillos.draw(self.pantalla)
 
             pg.display.flip()
 

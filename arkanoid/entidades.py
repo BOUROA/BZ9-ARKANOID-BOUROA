@@ -1,4 +1,5 @@
 import os
+from typing import Iterable
 import pygame as pg
 from pygame.sprite import Sprite
 
@@ -25,22 +26,23 @@ class Raqueta(Sprite):
         self.rect = self.image.get_rect(
             midbottom=(ANCHO/2, ALTO-self.margen_inferior))
 
-        self.imagenes = []
+    def update(self, *args, **kwargs):
 
-    def update(self):
         tecla = pg.key.get_pressed()
+        
         if tecla[pg.K_RIGHT]:
             self.rect.x += self.velocidad
             if self.rect.right > ANCHO:
                 self.rect.right = ANCHO
+        
         if tecla[pg.K_LEFT]:
             self.rect.x -= self.velocidad
             if self.rect.left < 0:
                 self.rect.left = 0
 
         self.iteracion = self.iteracion + 1
-        if self.iteracion == 4:
-            self.que_imagen_cargar += 1
+        if self.iteracion == self.limite_iteracion:
+            self.que_imagen_cargar = self.que_imagen_cargar + 1
             if self.que_imagen_cargar == len(self.imagenes):
                 self.que_imagen_cargar = 0
             self.image = self.imagenes[self.que_imagen_cargar]
@@ -51,5 +53,5 @@ class Ladrillo(Sprite):
 
     def __init__(self, x, y):
         super().__init__()
-        self.image = pg.image.load(os.path.join('resource', 'images', 'greentTile.png')
-        self.rect=self.image.get_rect(x=x, y=y)
+        self.image = pg.image.load(os.path.join('resources', 'images', 'greenTile.png'))
+        self.rect = self.image.get_rect(x=x, y=y)
