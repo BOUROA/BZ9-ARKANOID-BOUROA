@@ -18,21 +18,29 @@ class Portada(Escena):
     def __init__(self, pantalla):
         super().__init__(pantalla)
 
+        tam_letra = 20
+        espaciado = 100
+
         self.pantalla.fill((99, 99, 150))
+
+        self.back = pg.image.load(
+            os.path.join('resources', 'images', 'star_wars.jpg')
+        )
 
         self.logo = pg.image.load(
             os.path.join('resources', 'images', 'arkanoid_name.png')
         )
         fuente = pg.font.Font(os.path.join(
-            'resources', 'fonts', 'CabinSketch-Bold.ttf'), 20)
+            'resources', 'fonts', 'Strjmono.ttf'), tam_letra)
         self.texto_inicio = fuente.render(
-            'Pulsa <ESPACIO> para comenzar', True, 'white')
+            'Pulsa  < spacio >  para comenzar', True, 'WHITE')
 
         self.logo_pos = (ANCHO/2 - self.logo.get_width() /
                          2, 100)
         self.texto_pos = (ANCHO/2 - self.texto_inicio.get_width() /
-                          2, 100 + self.logo.get_height()+20)
+                          2, ALTO - espaciado - self.texto_inicio.get_height())
 
+        self.pantalla.blit(self.back,(0,0))
         self.pantalla.blit(self.logo, self.logo_pos)
         self.pantalla.blit(self.texto_inicio, self.texto_pos)
 

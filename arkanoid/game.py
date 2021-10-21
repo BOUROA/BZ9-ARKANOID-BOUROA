@@ -8,6 +8,7 @@ class Juego:
     def __init__(self):
         pg.init()
         self.pantalla = pg.display.set_mode((ANCHO, ALTO))
+        pg.display.set_caption('STARKANOID')
         self.escenas = [
             Portada(self.pantalla),
             Partida(self.pantalla),
