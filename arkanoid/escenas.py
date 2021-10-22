@@ -71,8 +71,8 @@ class Partida(Escena):
         self.marcador = 0
 
     def reset(self):
-        num_columnas = 5
-        num_filas = 10
+        num_columnas = 4
+        num_filas = 6
         ancho_ladrillo = 90
         alto_ladrillo = 30
         self.ladrillos.empty()
