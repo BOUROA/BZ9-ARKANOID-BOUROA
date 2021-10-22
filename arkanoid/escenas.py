@@ -68,7 +68,7 @@ class Partida(Escena):
         self.jugador = Raqueta()
         self.pelotita = Pelota(midtop=(ANCHO/2, ALTO/2-150))
         self.ladrillos = pg.sprite.Group()
-        self_marcador = 0
+        self.marcador = 0
 
     def reset(self):
         num_columnas = 5
@@ -80,9 +80,10 @@ class Partida(Escena):
         margen = (ANCHO - (num_columnas * ancho_ladrillo))/2
 
         for fila in range(num_filas):
+            puntos = 10 - fila*3
             for col in range(num_columnas):
                 ladrillo = Ladrillo(
-                    margen+col*ancho_ladrillo, fila*alto_ladrillo+margen
+                    margen+col*ancho_ladrillo, fila*alto_ladrillo+margen, puntos
                 )
 
                 self.ladrillos.add(ladrillo)
@@ -98,23 +99,26 @@ class Partida(Escena):
                     pg.quit()
 
             self.jugador.update()
-            self.ladrillos.update()
+            # self.ladrillos.update()
+            self.pelotita.update()
             self.pelotita.hay_colision(self.jugador.rect)
-
-            self.pantalla.blit(self.fondo, (0, 0))
-            self.pantalla.blit(self.jugador.image, self.jugador.rect)
-            self.ladrillos.draw(self.pantalla)
-            self.pantalla.blit(self.pelotita.image, self.pelotita.rect)
             golpeados = pg.sprite.spritecollide(
                 self.pelotita, self.ladrillos, True)
 
             if len(golpeados) > 0:
                 self.pelotita.velocidad_y *= -1
-                self.marcador += len(golpeados)
+                for ladrillo in golpeados:
+                    self.marcador += ladrillo.puntos
+
                 print(f"Marcador: {self.marcador}")
 
             if not self.pelotita.sigo_jugando:
                 return
+
+            self.pantalla.blit(self.fondo, (0, 0))
+            self.pantalla.blit(self.jugador.image, self.jugador.rect)
+            self.ladrillos.draw(self.pantalla)
+            self.pantalla.blit(self.pelotita.image, self.pelotita.rect)
 
             pg.display.flip()
 

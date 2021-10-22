@@ -51,16 +51,18 @@ class Raqueta(Sprite):
 
 class Ladrillo(Sprite):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, puntos):
         super().__init__()
         self.image = pg.image.load(os.path.join(
             'resources', 'images', 'greenTile.png'))
         self.rect = self.image.get_rect(x=x, y=y)
+        self.puntos = puntos
 
 
 class Pelota(Sprite):
 
     sigo_jugando = True
+    vidas = 5
 
     def __init__(self, **kwargs):
         super().__init__()
@@ -68,8 +70,8 @@ class Pelota(Sprite):
             'resources', 'images', 'ball1.png'))
         self.rect = self.image.get_rect(center=(ANCHO/2, ALTO/2))
 
-        self.velocidad_x = 5
-        self.velocidad_y = 5
+        self.posicion_inicial = kwargs
+        self.reset()
 
     def update(self):
         self.rect.x += self.velocidad_x
@@ -77,11 +79,20 @@ class Pelota(Sprite):
             self.velocidad_x = -self.velocidad_x
 
         self.rect.y += self.velocidad_y
-        if self.rec.top > ALTO:
-            self.sigo_jugando = False
+        if self.rect.top > ALTO:
+            self.vidas -= 1
+
+            if self.vidas == 0:
+                self.sigo_jugando = False
             self.reset()
         if self.rect.top <= 0:
             self.velocidad_y = -self.velocidad_y
 
     def hay_colision(self, otro):
-        self.rect.colliderect(otro)
+        if self.rect.colliderect(otro):
+            self.velocidad_y = -self.velocidad_y
+
+    def reset(self):
+        self.rect = self.image.get_rect(**self.posicion_inicial)
+        self.velocidad_x = 5
+        self.velocidad_y = 5
